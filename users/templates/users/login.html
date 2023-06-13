@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container pt-5">
+    <h1>Log In</h1>
+    <div class="d-flex justify-content-center">
+        <form class="form pt-4" action="{% url 'users:login-view' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <input class="btn btn-custom" type="submit" value="Login">
+        </form>
+    </div>
+</div>
+{% endblock %}

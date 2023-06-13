@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Freeze Users | Settings{% endblock %}
+{% block content %}
+<div class="container" style="min-height: 80vh;">
+    <h1 class="text-warning">Freeze Users</h1>
+    <p class="lead"><a href="{% url 'helpp:home' %}#moderation">Guidelines for Moderation</a></p>
+    <p class="text-warning">[Actions have consequences]</p>
+    <table class="table table-bordered">
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th></th>
+        </tr>
+        {% for user in available_users %}
+        <tr>
+            <td>{{ user.name }}</td>
+            <td>&commat;{{ user.djangouser.username }}</td>
+            <td class="py-1 d-flex justify-content-center"><a class="btn btn-danger" href="{% url 'users:freeze-id' id=user.id %}">BAN</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p><a class="btn btn-custom" href="{% url 'users:settings-view' %}">Back to Settings</a></p>
+</div>
+{% endblock %}

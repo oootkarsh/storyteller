@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'images/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'images/safari-pinned-tab.svg' %}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#9f00a7">
+    <meta name="theme-color" content="#23153c">
+    <meta name="description" content="Storyteller is a platform for reading and sharing interactive choice-based stories.">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <header>
+        <nav class="navbar fixed-top navbar-expand-lg  navbar-dark bg-translucent">
+            <a class="navbar-brand" href="{% url 'home-view' %}">
+                <img src="{% static 'images/icon.svg' %}" alt="Storyteller" width="32">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'helpp:home' %}">Help</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:settings-view' %}">&commat;{{ user.username}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'stories:home' %}">Stories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:home' %}">Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="form-inline" action="{% url 'users:logout-view' %}" method="POST">
+                            {% csrf_token %}
+                            <input class="btn btn-outline-danger my-2 my-sm-0" type="submit" value="Logout">
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="btn btn-outline-success mr-3" href="{% url 'users:login-view' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-primary" href="{% url 'users:signup-view' %}">Signup</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <h6>About</h6>
+                    <p class="text-justify">Storyteller is a platform for experiencing and sharing <i>interactive</i>
+                        choice-based stories. This is a minor-project for MCA-616 2020.</p>
+                </div>
+
+                <div class="col-6 col-md-3 mb-0 pb-0">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'stories:home' %}">Stories</a></li>
+                        <li><a href="{% url 'stories:list' %}">Buy</a></li>
+                        <li><a href="{% url 'helpp:home' %}#about-website">About</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-md-3 mb-0 pt-0">
+                    <h6>&nbsp;</h6>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'accounts:home' %}">Wallet</a></li>
+                        <li><a href="{% url 'users:settings-view' %}">Settings</a></li>
+                        <li><a href="{% url 'helpp:home' %}#info-authors">For Authors</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <p class="copyright-text text-center">Project source available under MIT License on
+                        <a href="https://github.com/utk-dev/storyteller">GitHub</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

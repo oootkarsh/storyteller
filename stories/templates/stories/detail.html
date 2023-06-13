@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Story Details{% endblock %}
+
+{% block content %}
+<div class="container" style="min-height: 80vh;">
+    <h2>{{ story.title }}</h2>
+    <p class="lead p-1" style="border: 2px solid #ff3f81">{{ story.summary }}</p>
+    <p>Written by <strong>@{{ story.author.username }}</strong></p>
+    <p><strong>₹{{ story.price }}</strong></p>
+    {% if resumePos is not None %}
+    <a class="btn btn-custom" href="{% url 'stories:read' storyid=story.id sectionid=resumePos.id %}">Continue Reading</a> <br>
+    <small class="text-success">*You already own this story</small>
+    {% elif canbuy %}
+    <a class="btn btn-outline-success" href="{% url 'stories:buy' id=story.id %}">Buy Now</a> <br>
+    <small class="text-warning">*Amount will be automatically deducted from your wallet.</small>
+    {% else %}
+    <p class="text-danger mb-0">Not enough coins in your wallet to buy this story</p>
+    <small><a href="{% url 'accounts:add' %}">*Add coins to your wallet</a></small>
+</div>
+{% endif %}
+{% endblock %}

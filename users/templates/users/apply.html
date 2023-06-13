@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Apply for Privileges{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Apply for privileges</h1>
+    {% if cust_err is not None %}
+    <div class="my-4 alert alert-danger alert-dismissible fade show" role="alert">
+        {{cust_err}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+    <p class="my-4"><a href="{% url 'users:settings-view' %}" class="btn btn-outline-info">Back to Settings</a></p>
+    <style>
+        .form {
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .form input[type="submit"], .form select {
+            max-width: 160px;
+        }
+        .form select {
+            color: white;
+            background-color: #ff3f81;
+            font-size: 1em;
+            height: 40px;
+        }
+        .form textarea {
+            max-width: 500px;
+        }
+    </style>
+    <form class="form" action="{% url 'users:privilege-application' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input class="btn btn-custom" type="submit" value="Apply">
+    </form>
+</div>
+{% endblock %}
